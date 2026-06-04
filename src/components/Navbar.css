@@ -1,0 +1,106 @@
+.liquid-navbar-container {
+  position: fixed;
+  bottom: 40px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 1000;
+  pointer-events: none; /* Let clicks pass through container */
+}
+
+.liquid-navbar {
+  pointer-events: auto; /* Enable clicks on the navbar itself */
+  /* Real liquid glass styling */
+  background: rgba(20, 20, 20, 0.4);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 60px;
+  padding: 10px 15px;
+  box-shadow: 
+    0 30px 60px rgba(0, 0, 0, 0.5), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  width: auto;
+  min-width: 350px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  gap: 10px;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: row; /* Horizontal layout for icon and text */
+  align-items: center;
+  color: #999;
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 12px 20px;
+  border-radius: 40px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  gap: 8px;
+}
+
+.nav-item .icon {
+  width: 22px;
+  height: 22px;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.nav-item .text {
+  transition: all 0.3s ease;
+}
+
+.nav-item:hover {
+  color: var(--text-light);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-item:hover .icon {
+  opacity: 1;
+}
+
+/* Active item styling - neon orange vibe */
+.active-item {
+  color: var(--bg-black);
+  background: var(--primary-orange);
+  box-shadow: 0 0 20px rgba(255, 90, 0, 0.4);
+}
+
+.active-item:hover {
+  color: var(--bg-black);
+  background: var(--primary-orange);
+  box-shadow: 0 0 30px rgba(255, 90, 0, 0.6);
+}
+
+.active-item .icon {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .liquid-navbar {
+    min-width: 90%;
+  }
+  .nav-item {
+    flex-direction: column;
+    padding: 8px 15px;
+    font-size: 0.75rem;
+    gap: 4px;
+  }
+  .nav-item .icon {
+    width: 20px;
+    height: 20px;
+  }
+}

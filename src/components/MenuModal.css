@@ -1,0 +1,227 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Peculiar Animation: Liquid drop in / bounce */
+@keyframes dropIn {
+  0% { transform: translateY(-100vh) scale(0.5) rotate(-10deg); opacity: 0; border-radius: 50%; }
+  60% { transform: translateY(20px) scale(1.05) rotate(2deg); opacity: 1; border-radius: 20px; }
+  80% { transform: translateY(-10px) scale(0.98) rotate(-1deg); }
+  100% { transform: translateY(0) scale(1) rotate(0); border-radius: 20px; }
+}
+
+@keyframes dropOut {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(100vh) scale(0.8) rotate(10deg); opacity: 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.modal-overlay.open {
+  animation: fadeIn 0.4s forwards;
+}
+
+.modal-overlay.closed {
+  animation: fadeOut 0.4s forwards;
+}
+
+.modal-content.open {
+  animation: dropIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.modal-content.closed {
+  animation: dropOut 0.5s ease-in forwards;
+}
+
+.modal-content {
+  background: linear-gradient(145deg, #121212, #0a0a0a);
+  width: 90%;
+  max-width: 1000px;
+  height: 85vh;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 107, 0, 0.3);
+  box-shadow: 0 30px 60px rgba(255, 90, 0, 0.2), inset 0 2px 10px rgba(255, 255, 255, 0.05);
+  padding: 40px;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar for Modal */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+.modal-content::-webkit-scrollbar-track {
+  background: #0a0a0a;
+  border-radius: 10px;
+}
+.modal-content::-webkit-scrollbar-thumb {
+  background: var(--primary-orange);
+  border-radius: 10px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  background: transparent;
+  border: none;
+  color: var(--text-light);
+  font-size: 2.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  color: var(--primary-yellow);
+  transform: rotate(90deg);
+}
+
+.modal-title {
+  text-align: center;
+  font-size: 3.5rem;
+  color: var(--primary-orange);
+  text-shadow: 0 0 15px rgba(255, 90, 0, 0.5);
+  margin-bottom: 40px;
+}
+
+.modal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+.menu-item-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  position: relative;
+  /* Cascade entrance animation */
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideUpFade 0.5s ease forwards;
+  animation-delay: calc(0.3s + var(--delay));
+}
+
+@keyframes slideUpFade {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.menu-item-card:hover {
+  background: rgba(255, 107, 0, 0.1);
+  border-color: rgba(255, 107, 0, 0.4);
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.menu-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+  padding-bottom: 10px;
+  padding-right: 95px; /* Increased space to clear the polaroid */
+}
+
+.menu-item-title-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex: 1;
+  padding-right: 10px;
+}
+
+/* Polaroid Styling */
+.menu-item-thumb-wrapper {
+  position: absolute;
+  top: -15px;
+  right: 15px;
+  width: 70px;
+  height: 80px;
+  background: white;
+  padding: 5px 5px 15px 5px;
+  box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.6);
+  transform: rotate(8deg);
+  z-index: 10;
+  transition: transform 0.3s ease;
+}
+
+.menu-item-thumb-wrapper:hover {
+  transform: rotate(0deg) scale(1.1);
+}
+
+/* Masking tape effect */
+.menu-item-thumb-wrapper::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-10deg);
+  width: 35px;
+  height: 12px;
+  background: rgba(230, 225, 210, 0.8);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.menu-item-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.menu-item-title-row h3 {
+  font-family: 'Anton', sans-serif;
+  font-size: 1.5rem;
+  color: var(--text-light);
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.menu-item-price {
+  font-family: 'Anton', sans-serif;
+  font-size: 1.4rem;
+  color: var(--primary-yellow);
+  background: rgba(255, 213, 0, 0.1);
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+
+.menu-item-card p {
+  color: #aaa;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .modal-content {
+    padding: 25px 15px;
+    height: 90vh;
+  }
+  .modal-title {
+    font-size: 2.5rem;
+    margin-bottom: 25px;
+  }
+}
